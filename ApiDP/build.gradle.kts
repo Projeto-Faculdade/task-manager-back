@@ -5,6 +5,7 @@ plugins {
 	id("io.spring.dependency-management") version "1.1.5"
 	kotlin("jvm") version "1.9.24"
 	kotlin("plugin.spring") version "1.9.24"
+	kotlin("plugin.jpa") version "1.9.24"
 }
 
 group = "com.DesignPatterns"
@@ -24,10 +25,11 @@ dependencies {
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testRuntimeOnly("org.junit.platform:junit-platform-launcher")
-	// https://mvnrepository.com/artifact/org.springframework.data/spring-data-jpa
 	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+	implementation ("org.postgresql:postgresql")
+	implementation ("org.springdoc:springdoc-openapi-ui:1.6.9")
+	implementation ("org.springdoc:springdoc-openapi-kotlin:1.6.9")
 
-	runtimeOnly ("org.postgresql:postgresql")
 
 }
 
