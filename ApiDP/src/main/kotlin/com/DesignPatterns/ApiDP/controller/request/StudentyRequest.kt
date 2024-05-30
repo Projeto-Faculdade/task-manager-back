@@ -2,7 +2,7 @@ package com.DesignPatterns.ApiDP.controller.request
 
 import jakarta.persistence.Column
 
-data class PostStudentyRequest (
+data class StudentyRequest (
 
         var name: String,
 
