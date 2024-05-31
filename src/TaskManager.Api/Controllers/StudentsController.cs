@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using TaskManager.Api.Models;
 using TaskManager.Application.Students.Create;
+using TaskManager.Application.Students.Update;
 
 namespace TaskManager.Api.Controllers;
 
@@ -16,6 +17,13 @@ public class StudentsController(IMediator mediator) : ControllerBase
         return Created("api/v1/students/{id}", new { id = result });
     }
 
+    [HttpPut("{id:guid}")]
+    public async Task<IActionResult> Put(Guid id, StudentPutRequest request)
+    {
+        await mediator.Send(new StudentUpdateRequest());
+        return NoContent();
+    }
+
     [HttpGet]
     public async Task<IActionResult> GetStudents([FromHeader(Name = "Accept-Language")] string preferredLanguage)
     {
@@ -28,11 +36,7 @@ public class StudentsController(IMediator mediator) : ControllerBase
         return Ok();
     }
 
-    [HttpPut("{id:guid}")]
-    public async Task<IActionResult> Put(Guid id, StudentPutRequest request)
-    {
-        return NoContent();
-    }
+
 
     [HttpDelete("{id:guid}")]
     public async Task<IActionResult> DeleteStudent(Guid id)
