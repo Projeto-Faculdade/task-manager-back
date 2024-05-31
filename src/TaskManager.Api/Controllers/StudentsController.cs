@@ -1,16 +1,19 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using MediatR;
+using Microsoft.AspNetCore.Mvc;
 using TaskManager.Api.Models;
+using TaskManager.Application.Students.Create;
 
 namespace TaskManager.Api.Controllers;
 
 [ApiController]
 [Route("api/v1/[controller]")]
-public class StudentsController : ControllerBase
+public class StudentsController(IMediator mediator) : ControllerBase
 {
     [HttpPost]
     public async Task<IActionResult> Post(StudentPostRequest request)
     {
-        return Created("api/v1/students/{id}", new { request.Id });
+        var result = await mediator.Send(new StudentCreateRequest());
+        return Created("api/v1/students/{id}", new { id = result });
     }
 
     [HttpGet("{id:guid}")]
