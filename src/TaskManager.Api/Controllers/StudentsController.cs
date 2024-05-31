@@ -6,7 +6,7 @@ using TaskManager.Application.Students.Create;
 namespace TaskManager.Api.Controllers;
 
 [ApiController]
-[Route("api/v1/[controller]")]
+[Route("api/v1/students")]
 public class StudentsController(IMediator mediator) : ControllerBase
 {
     [HttpPost]
@@ -17,20 +17,17 @@ public class StudentsController(IMediator mediator) : ControllerBase
     }
 
     [HttpGet]
-    public async Task<IActionResult> GetStudents()
+    public async Task<IActionResult> GetStudents([FromHeader(Name = "Accept-Language")] string preferredLanguage)
     {
         return Ok();
     }
 
     [HttpGet("{id:guid}")]
-    public async Task<IActionResult> GetSingle(Guid id)
+    public async Task<IActionResult> GetSingle(Guid id, [FromHeader(Name = "Accept-Language")] string preferredLanguage)
     {
-        var student = new StudentPostRequest
-        {
-            Id = id
-        };
-        return Ok(student);
+        return Ok();
     }
+
     [HttpPut("{id:guid}")]
     public async Task<IActionResult> Put(Guid id, StudentPutRequest request)
     {
