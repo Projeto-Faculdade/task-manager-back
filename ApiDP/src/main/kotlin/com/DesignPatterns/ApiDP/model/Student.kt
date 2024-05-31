@@ -8,8 +8,8 @@ import jakarta.persistence.Id
 import java.util.UUID
 
 
-@Entity(name = "studenty")
-data class Studenty (
+@Entity
+data class Student (
         @Id
         @GeneratedValue(strategy = GenerationType.UUID)
         var id: UUID,
@@ -17,11 +17,9 @@ data class Studenty (
         var name: String,
 
         var email: String,
-        @Column(name = "preferred-language")
+        @Column(name = "preferred_language")
         var preferredLanguage: String
 
-){
-        constructor() :this(UUID.randomUUID(),"","","")
-}
+)
 
 
