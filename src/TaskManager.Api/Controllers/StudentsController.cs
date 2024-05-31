@@ -16,6 +16,12 @@ public class StudentsController(IMediator mediator) : ControllerBase
         return Created("api/v1/students/{id}", new { id = result });
     }
 
+    [HttpGet]
+    public async Task<IActionResult> GetStudents()
+    {
+        return Ok();
+    }
+
     [HttpGet("{id:guid}")]
     public async Task<IActionResult> GetSingle(Guid id)
     {
@@ -24,5 +30,16 @@ public class StudentsController(IMediator mediator) : ControllerBase
             Id = id
         };
         return Ok(student);
+    }
+    [HttpPut("{id:guid}")]
+    public async Task<IActionResult> Put(Guid id, StudentPutRequest request)
+    {
+        return NoContent();
+    }
+
+    [HttpDelete("{id:guid}")]
+    public async Task<IActionResult> DeleteStudent(Guid id)
+    {
+        return NoContent();
     }
 }
