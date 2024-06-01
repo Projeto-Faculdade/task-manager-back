@@ -52,6 +52,51 @@ namespace TaskManager.Data.Migrations
 
                     b.ToTable("strudents");
                 });
+
+            modelBuilder.Entity("TaskManager.Data.Models.TaskToDo", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT")
+                        .HasColumnName("id");
+
+                    b.Property<string>("Course")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("TEXT")
+                        .HasColumnName("course");
+
+                    b.Property<DateTime>("LimitDate")
+                        .HasColumnType("TEXT")
+                        .HasColumnName("limit_date");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("TEXT")
+                        .HasColumnName("name");
+
+                    b.Property<Guid>("StudentId")
+                        .HasColumnType("TEXT")
+                        .HasColumnName("student_id");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("StudentId");
+
+                    b.ToTable("tasks");
+                });
+
+            modelBuilder.Entity("TaskManager.Data.Models.TaskToDo", b =>
+                {
+                    b.HasOne("TaskManager.Data.Models.Student", "Student")
+                        .WithMany()
+                        .HasForeignKey("StudentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Student");
+                });
 #pragma warning restore 612, 618
         }
     }
