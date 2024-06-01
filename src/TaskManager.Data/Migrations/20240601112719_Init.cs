@@ -30,7 +30,8 @@ namespace TaskManager.Data.Migrations
                 columns: table => new
                 {
                     id = table.Column<Guid>(type: "TEXT", nullable: false),
-                    name = table.Column<string>(type: "TEXT", maxLength: 100, nullable: false),
+                    name_pt = table.Column<string>(type: "TEXT", maxLength: 100, nullable: false),
+                    name_en = table.Column<string>(type: "TEXT", maxLength: 100, nullable: false),
                     course = table.Column<string>(type: "TEXT", maxLength: 100, nullable: false),
                     limit_date = table.Column<DateTime>(type: "TEXT", nullable: false),
                     student_id = table.Column<Guid>(type: "TEXT", nullable: false)

@@ -10,9 +10,13 @@ public class TaskToDo
     [Column("id")]
     public Guid Id { get; set; }
 
-    [Column("name")]
+    [Column("name_pt")]
     [MaxLength(100)]
-    public string Name { get; set; } = string.Empty!;
+    public string Name_Pt { get; set; } = string.Empty!;
+
+    [Column("name_en")]
+    [MaxLength(100)]
+    public string Name_En { get; set; } = string.Empty!;
 
     [Column("course")]
     [MaxLength(100)]

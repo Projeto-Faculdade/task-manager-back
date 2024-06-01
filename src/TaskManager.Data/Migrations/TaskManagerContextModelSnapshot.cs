@@ -70,11 +70,17 @@ namespace TaskManager.Data.Migrations
                         .HasColumnType("TEXT")
                         .HasColumnName("limit_date");
 
-                    b.Property<string>("Name")
+                    b.Property<string>("Name_En")
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("TEXT")
-                        .HasColumnName("name");
+                        .HasColumnName("name_en");
+
+                    b.Property<string>("Name_Pt")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("TEXT")
+                        .HasColumnName("name_pt");
 
                     b.Property<Guid>("StudentId")
                         .HasColumnType("TEXT")
