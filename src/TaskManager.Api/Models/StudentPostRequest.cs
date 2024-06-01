@@ -15,7 +15,10 @@ public class StudentPostRequest
     public string PreferredLanguage { get; set; } = string.Empty!;
 
     public static implicit operator StudentCreateRequest(StudentPostRequest r)
-    {
-        return new StudentCreateRequest();
-    }
+        => new()
+        {
+            Email = r.Email,
+            PreferredLanguage = r.PreferredLanguage,
+            Name = r.Name,
+        };
 }
