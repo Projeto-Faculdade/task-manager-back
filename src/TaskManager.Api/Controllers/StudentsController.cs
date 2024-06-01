@@ -1,6 +1,8 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using TaskManager.Api.Models;
+using TaskManager.Application.Students.Create;
+using TaskManager.Application.Students.Update;
 
 namespace TaskManager.Api.Controllers;
 
@@ -11,7 +13,7 @@ public class StudentsController(IMediator mediator) : ControllerBase
     [HttpPost]
     public async Task<IActionResult> Post(StudentPostRequest request)
     {
-        var result = await mediator.Send(request);
+        var result = await mediator.Send((StudentCreateRequest)request);
         return Created("api/v1/students/{id}", new { id = result });
     }
 
@@ -19,7 +21,7 @@ public class StudentsController(IMediator mediator) : ControllerBase
     public async Task<IActionResult> Put(Guid id, StudentPutRequest request)
     {
         request.Id = id;
-        await mediator.Send(request);
+        await mediator.Send((StudentUpdateRequest)request);
         return NoContent();
     }
 

@@ -1,8 +1,17 @@
+using Microsoft.EntityFrameworkCore;
 using TaskManager.Application;
+using TaskManager.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
+var configuration = builder.Configuration;
 var services = builder.Services;
+
+var connectionString = configuration.GetConnectionString("TaskManagerContext")
+    ?? throw new InvalidOperationException("Connection string 'TaskManagerContext' not found.");
+
+services.AddDbContext<TaskManagerContext>(options =>
+    options.UseSqlite(connectionString));
 
 services.AddMediatR(m => m.RegisterServicesFromAssembly(typeof(IApplicationReference).Assembly));
 services.AddControllers();
@@ -24,4 +33,9 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-app.Run();
+using (var scope = app.Services.CreateAsyncScope())
+{
+    var context = scope.ServiceProvider.GetRequiredService<TaskManagerContext>();
+    await context.Database.MigrateAsync();
+}
+await app.RunAsync();
