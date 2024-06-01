@@ -1,3 +1,3 @@
 ﻿namespace TaskManager.Application;
 
-public interface IApplicationReference;
+public interface IApplicationReference{}
