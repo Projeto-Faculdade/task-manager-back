@@ -1,16 +1,15 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
+using TaskManager.Data;
 
-namespace TaskManager.Application.Students.Delete
+namespace TaskManager.Application.Students.Delete;
+
+internal class StudentDeleteHandler(TaskManagerContext context) : IRequestHandler<StudentDeleteRequest>
 {
-    internal class StudentDeleteHandler : IRequestHandler<StudentDeleteRequest>
+    public async Task Handle(StudentDeleteRequest request, CancellationToken cancellationToken)
     {
-        public Task Handle(StudentDeleteRequest request, CancellationToken cancellationToken)
-        {
-            throw new NotImplementedException();
-        }
+        await context.Students
+            .Where(s => s.Id == request.Id)
+            .ExecuteDeleteAsync(cancellationToken);
     }
 }

@@ -1,16 +1,23 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
+using TaskManager.Application.Students.GetById;
+using TaskManager.Data;
 
-namespace TaskManager.Application.Students.GetAll
+namespace TaskManager.Application.Students.GetAll;
+
+internal class StudentGetAllHandler(TaskManagerContext context) : IRequestHandler<StudentGetAllRequest, StudentGetAllResponse>
 {
-    public class StudentGetAllHandler : IRequestHandler<StudentGetAllRequest>
+    public async Task<StudentGetAllResponse> Handle(StudentGetAllRequest request, CancellationToken cancellationToken)
     {
-         public Task Handle(StudentGetAllRequest request, CancellationToken cancellationToken)
-        {
-            throw new NotImplementedException();
-        }
+        var list = await context.Students
+            .Select(s => new StudentGetByIdResponse
+            {
+                Id = s.Id,
+                Name = s.Name,
+                Email = s.Email,
+                PreferredLanguage = s.PreferredLanguage
+            }).ToListAsync(cancellationToken);
+
+        return new StudentGetAllResponse(list);
     }
 }

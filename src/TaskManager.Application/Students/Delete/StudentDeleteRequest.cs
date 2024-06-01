@@ -1,13 +1,8 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using MediatR;
 
-namespace TaskManager.Application.Students.Delete
+namespace TaskManager.Application.Students.Delete;
+
+public class StudentDeleteRequest : IRequest
 {
-    public class StudentDeleteRequest : IRequest
-    {
-        
-    }
+    public Guid Id { get; set; }
 }
