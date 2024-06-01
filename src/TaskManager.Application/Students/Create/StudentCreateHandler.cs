@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using TaskManager.Application.Extensions;
 using TaskManager.Data;
 using TaskManager.Data.Models;
 using TaskManager.Notification;
@@ -13,7 +14,7 @@ internal class StudentCreateHandler(TaskManagerContext context, IRabbitMqBroker 
         {
             Email = request.Email,
             Name = request.Name,
-            PreferredLanguage = request.PreferredLanguage,
+            PreferredLanguage = request.PreferredLanguage.ToPreferredLanguage(),
         };
 
         _ = await context.Students.AddAsync(student, cancellationToken);

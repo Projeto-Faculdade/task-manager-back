@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
+using TaskManager.Application.Extensions;
 using TaskManager.Data;
 
 namespace TaskManager.Application.Students.Update;
@@ -10,7 +11,7 @@ internal class StudentUpdateHandler(TaskManagerContext context) : IRequestHandle
     {
         await context.Students.Where(s => s.Id == request.Id)
              .ExecuteUpdateAsync(p =>
-                p.SetProperty(s => s.PreferredLanguage, request.PreferredLanguage)
+                p.SetProperty(s => s.PreferredLanguage, request.PreferredLanguage.ToPreferredLanguage())
                 .SetProperty(s => s.Name, request.Name)
                 .SetProperty(s => s.Email, request.Email)
             , cancellationToken);
