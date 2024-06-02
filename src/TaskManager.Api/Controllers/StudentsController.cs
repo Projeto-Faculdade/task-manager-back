@@ -25,7 +25,7 @@ public class StudentsController(IMediator mediator) : ControllerBase
                 return BadRequest(validation.Errors.Select(x => x.ErrorMessage));
             }
             var result = await mediator.Send((StudentCreateRequest)request);
-            return Created("api/v1/students/id", new { id = result });
+            return Created("api/v1/tudentss/id", new { id = result });
         }
         catch (Exception ex)
         {
