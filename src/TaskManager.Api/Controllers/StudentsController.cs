@@ -84,6 +84,12 @@ public class StudentsController(IMediator mediator) : ControllerBase
         return Ok(result);
     }
 
+    [HttpGet("{email:string}")]
+    public async Task<IActionResult> GetByEmail(string email)
+    {
+        return Ok();
+    }
+
     [HttpDelete("{id:guid}")]
     public async Task<IActionResult> DeleteStudent(Guid id)
     {
