@@ -12,4 +12,5 @@ internal class StudentDeleteHandler(TaskManagerContext context) : IRequestHandle
             .Where(s => s.Id == request.Id)
             .ExecuteDeleteAsync(cancellationToken);
     }
+
 }
