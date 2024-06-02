@@ -4,6 +4,7 @@ using TaskManager.Api.Models;
 using TaskManager.Application.Students.Create;
 using TaskManager.Application.Students.Delete;
 using TaskManager.Application.Students.GetAll;
+using TaskManager.Application.Students.GetByEmail;
 using TaskManager.Application.Students.GetById;
 using TaskManager.Application.Students.Update;
 
@@ -82,6 +83,22 @@ public class StudentsController(IMediator mediator) : ControllerBase
         }
 
         return Ok(result);
+    }
+
+    [HttpGet("{email}")]
+    public async Task<IActionResult> GetByEmail(string email)
+    {
+        var request = new StudentByEmailRequest
+        {
+            Email = email
+        };
+        var response = await mediator.Send(request);
+
+        if (response == default)
+        {
+            return NotFound();
+        }
+        return Ok(response);
     }
 
     [HttpDelete("{id:guid}")]
