@@ -7,6 +7,7 @@ using TaskManager.Application.Students.GetAll;
 using TaskManager.Application.Students.GetByEmail;
 using TaskManager.Application.Students.GetById;
 using TaskManager.Application.Students.Update;
+using TaskManager.Application.TasksToDo.GetByStudent;
 
 namespace TaskManager.Api.Controllers;
 
@@ -26,7 +27,7 @@ public class StudentsController(IMediator mediator) : ControllerBase
                 return BadRequest(validation.Errors.Select(x => x.ErrorMessage));
             }
             var result = await mediator.Send((StudentCreateRequest)request);
-            return Created("api/v1/tudentss/id", new { id = result });
+            return Created("api/v1/students/id", new { id = result });
         }
         catch (Exception ex)
         {
@@ -92,12 +93,25 @@ public class StudentsController(IMediator mediator) : ControllerBase
         {
             Email = email
         };
+
         var response = await mediator.Send(request);
 
         if (response == default)
         {
             return NotFound();
         }
+        return Ok(response);
+    }
+
+    [HttpGet("{id:guid}/tasks")]
+    public async Task<IActionResult> GetTasks(Guid id, [FromHeader(Name = "Accept-Language")] string preferredLanguage)
+    {
+        var request = new TaskGetByStudentRequest
+        {
+            SudentId = id,
+            PreferredLanguage = preferredLanguage
+        };
+        var response = await mediator.Send(request);
         return Ok(response);
     }
 

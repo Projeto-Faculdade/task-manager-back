@@ -18,6 +18,7 @@ public class StudentByEmailHandler(TaskManagerContext context) : IRequestHandler
 
         return new StudentByEmailResponse
         {
+            Id = student.Id,
             Email = student.Email,
             Name = student.Name,
             PreferredLanguage = student.PreferredLanguage,
