@@ -7,6 +7,7 @@ using TaskManager.Application.Students.GetAll;
 using TaskManager.Application.Students.GetByEmail;
 using TaskManager.Application.Students.GetById;
 using TaskManager.Application.Students.Update;
+using TaskManager.Application.TasksToDo.GetByStudent;
 
 namespace TaskManager.Api.Controllers;
 
@@ -98,6 +99,18 @@ public class StudentsController(IMediator mediator) : ControllerBase
         {
             return NotFound();
         }
+        return Ok(response);
+    }
+
+    [HttpGet("{id:guid}/tasks")]
+    public async Task<IActionResult> GetTasks(Guid id, [FromHeader(Name = "Accept-Language")] string preferredLanguage)
+    {
+        var request = new TaskGetByStudentRequest
+        {
+            SudentId = id,
+            PreferredLanguage = preferredLanguage
+        };
+        var response = await mediator.Send(request);
         return Ok(response);
     }
 

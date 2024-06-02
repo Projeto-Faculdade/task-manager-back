@@ -27,4 +27,6 @@ public class Student
     [MaxLength(5)]
     [Column("preferred_language")]
     public string PreferredLanguage { get; set; } = string.Empty!;
+
+
 }
