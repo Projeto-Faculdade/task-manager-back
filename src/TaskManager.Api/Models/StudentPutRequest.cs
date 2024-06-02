@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization;
+using FluentValidation;
 using TaskManager.Application.Students.Update;
 
 namespace TaskManager.Api.Models;
@@ -22,4 +23,21 @@ public class StudentPutRequest
             Email = r.Email,
             PreferredLanguage = r.PreferredLanguage,
         };
+}
+
+public class StudentPutRequestValidator : AbstractValidator<StudentPutRequest>
+{
+    public StudentPutRequestValidator()
+    {
+        RuleFor(cmd => cmd.Id)
+            .NotEmpty()
+            .NotEqual(Guid.Empty);
+
+        RuleFor(cmd => cmd.Email)
+            .EmailAddress();
+
+        RuleFor(cmd => cmd.Name)
+            .MinimumLength(5)
+            .MaximumLength(50);
+    }
 }

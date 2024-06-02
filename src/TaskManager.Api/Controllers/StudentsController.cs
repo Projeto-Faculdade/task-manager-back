@@ -18,8 +18,14 @@ public class StudentsController(IMediator mediator) : ControllerBase
     {
         try
         {
+            var validation = new StudentPostRequestValidator().Validate(request);
+            var invalidRequest = !validation.IsValid;
+            if (invalidRequest)
+            {
+                return BadRequest(validation.Errors.Select(x => x.ErrorMessage));
+            }
             var result = await mediator.Send((StudentCreateRequest)request);
-            return Created("api/v1/students/id", new { id = result });
+            return Created("api/v1/tudentss/id", new { id = result });
         }
         catch (Exception ex)
         {
@@ -32,6 +38,12 @@ public class StudentsController(IMediator mediator) : ControllerBase
     {
         try
         {
+            var validation = new StudentPutRequestValidator().Validate(request);
+            var invalidRequest = !validation.IsValid;
+            if (invalidRequest)
+            {
+                return BadRequest(validation.Errors.Select(x => x.ErrorMessage));
+            }
             request.Id = id;
             await mediator.Send((StudentUpdateRequest)request);
             return NoContent();

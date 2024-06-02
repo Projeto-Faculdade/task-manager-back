@@ -11,7 +11,7 @@ using TaskManager.Data;
 namespace TaskManager.Data.Migrations
 {
     [DbContext(typeof(TaskManagerContext))]
-    [Migration("20240601015106_Init")]
+    [Migration("20240601112719_Init")]
     partial class Init
     {
         /// <inheritdoc />
@@ -54,6 +54,57 @@ namespace TaskManager.Data.Migrations
                         .IsUnique();
 
                     b.ToTable("strudents");
+                });
+
+            modelBuilder.Entity("TaskManager.Data.Models.TaskToDo", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT")
+                        .HasColumnName("id");
+
+                    b.Property<string>("Course")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("TEXT")
+                        .HasColumnName("course");
+
+                    b.Property<DateTime>("LimitDate")
+                        .HasColumnType("TEXT")
+                        .HasColumnName("limit_date");
+
+                    b.Property<string>("Name_En")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("TEXT")
+                        .HasColumnName("name_en");
+
+                    b.Property<string>("Name_Pt")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("TEXT")
+                        .HasColumnName("name_pt");
+
+                    b.Property<Guid>("StudentId")
+                        .HasColumnType("TEXT")
+                        .HasColumnName("student_id");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("StudentId");
+
+                    b.ToTable("tasks");
+                });
+
+            modelBuilder.Entity("TaskManager.Data.Models.TaskToDo", b =>
+                {
+                    b.HasOne("TaskManager.Data.Models.Student", "Student")
+                        .WithMany()
+                        .HasForeignKey("StudentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Student");
                 });
 #pragma warning restore 612, 618
         }

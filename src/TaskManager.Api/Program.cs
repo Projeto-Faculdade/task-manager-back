@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using TaskManager.Application;
 using TaskManager.Data;
+using TaskManager.Notification;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,6 +14,15 @@ var connectionString = configuration.GetConnectionString("TaskManagerContext")
 services.AddDbContext<TaskManagerContext>(options =>
     options.UseSqlite(connectionString));
 
+if (configuration.GetSection("RabbitMq:Enable").Get<bool>())
+{
+    services.AddSingleton<IRabbitMqBroker, RabbitMqBrokerService>();
+}
+else
+{
+    services.AddSingleton<IRabbitMqBroker, RabbitMqBrokerMockService>();
+}
+
 services.AddMediatR(m => m.RegisterServicesFromAssembly(typeof(IApplicationReference).Assembly));
 services.AddControllers();
 services.AddEndpointsApiExplorer();
@@ -22,12 +32,8 @@ services.AddCors();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+app.UseSwagger();
+app.UseSwaggerUI();
 
 app.UseCors(builder => builder
     .SetIsOriginAllowed(orign => true)
