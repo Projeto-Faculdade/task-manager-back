@@ -9,14 +9,13 @@ namespace TaskManager.Application.TasksToDo.Create
 {
     public class TaskToDoCreateRequest : IRequest<Guid>
     {
-        public string Name { get; set; } = string.Empty!;
+        public string Name_Pt { get; set; } = string.Empty!;
 
         public string Course { get; set; } = string.Empty!;
 
         public DateTime LimitDate { get; set; }
 
         public Guid StudentId { get; set; }
-        
-        
+        public string Name_En { get; set; }
     }
 }

@@ -1,18 +1,35 @@
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using TaskManager.Api.Models;
+using TaskManager.Application.TasksToDo.Create;
 
 namespace TaskManager.Api.Controllers;
 
 [ApiController]
-[Route("api/v1/taskToDo")]
-public class TaskController : ControllerBase
+[Route("api/v1/tasks")]
+public class TasksController(IMediator mediator) : ControllerBase
 {
     [HttpPost]
     public async Task<IActionResult> Post(TaskToDoPostRequest request)
     {
-        await Task.Delay(100);
+        try
+        {
+            var validator = new TaskPutRequestValidator().Validate(request);
 
-        return Created();
+            var invalidRequest = !validator.IsValid;
+            if (invalidRequest)
+            {
+                return BadRequest(validator.Errors.Select(e => e.ErrorMessage));
+            }
+
+            var response = await mediator.Send((TaskToDoCreateRequest)request);
+
+            return Created("api/v1/tasks/id", new { id = response });
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.InnerException);
+        }
     }
 
     [HttpGet("{id:guid}")]

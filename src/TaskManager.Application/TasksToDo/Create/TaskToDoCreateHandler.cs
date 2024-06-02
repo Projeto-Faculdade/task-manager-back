@@ -11,11 +11,10 @@ internal class TaskToDoCreateHandler(TaskManagerContext context) : IRequestHandl
         var taskToDo = new TaskToDo
         {
             Course = request.Course,
-            Name_En = request.Name,
-            Name_Pt = request.Name,
+            Name_En = request.Name_Pt,
+            Name_Pt = request.Name_Pt,
             StudentId = request.StudentId,
             LimitDate = request.LimitDate
-
         };
 
         _ = await context.Tasks.AddAsync(taskToDo, cancellationToken);
