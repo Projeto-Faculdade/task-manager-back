@@ -5,7 +5,7 @@ using TaskManager.Application.TasksToDo.Create;
 
 namespace TaskManager.Api.Models
 {
-    public class TaskToDoPostRequest
+    public class TaskPostRequest
     {
         [Required]
         public string Name_Pt { get; set; } = string.Empty!;
@@ -22,7 +22,7 @@ namespace TaskManager.Api.Models
         [Required]
         public Guid StudentId { get; set; }
 
-        public static explicit operator TaskToDoCreateRequest(TaskToDoPostRequest r)
+        public static explicit operator TaskCreateRequest(TaskPostRequest r)
             => new()
             {
                 StudentId = r.StudentId,
@@ -34,9 +34,9 @@ namespace TaskManager.Api.Models
     }
 }
 
-public class TaskPutRequestValidator : AbstractValidator<TaskToDoPostRequest>
+public class TaskPostRequestValidator : AbstractValidator<TaskPostRequest>
 {
-    public TaskPutRequestValidator()
+    public TaskPostRequestValidator()
     {
         RuleFor(cmd => cmd.Course)
              .MinimumLength(5)

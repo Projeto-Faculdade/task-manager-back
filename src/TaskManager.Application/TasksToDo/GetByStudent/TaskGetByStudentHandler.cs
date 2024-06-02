@@ -16,6 +16,7 @@ public class TaskGetByStudentHandler(TaskManagerContext context) : IRequestHandl
                 Course = t.Course,
                 LimitDate = t.LimitDate,
                 Name = request.PreferredLanguage == "pt" ? t.Name_Pt : t.Name_En,
+                StudentId = t.StudentId,
             })
             .ToListAsync(cancellationToken);
 

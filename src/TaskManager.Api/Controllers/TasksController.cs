@@ -10,11 +10,11 @@ namespace TaskManager.Api.Controllers;
 public class TasksController(IMediator mediator) : ControllerBase
 {
     [HttpPost]
-    public async Task<IActionResult> Post(TaskToDoPostRequest request)
+    public async Task<IActionResult> Post(TaskPostRequest request)
     {
         try
         {
-            var validator = new TaskPutRequestValidator().Validate(request);
+            var validator = new TaskPostRequestValidator().Validate(request);
 
             var invalidRequest = !validator.IsValid;
             if (invalidRequest)
@@ -22,7 +22,7 @@ public class TasksController(IMediator mediator) : ControllerBase
                 return BadRequest(validator.Errors.Select(e => e.ErrorMessage));
             }
 
-            var response = await mediator.Send((TaskToDoCreateRequest)request);
+            var response = await mediator.Send((TaskCreateRequest)request);
 
             return Created("api/v1/tasks/id", new { id = response });
         }
@@ -39,7 +39,7 @@ public class TasksController(IMediator mediator) : ControllerBase
     }
 
     [HttpPut("{id:guid}")]
-    public async Task<IActionResult> Put(Guid id, TaskToDoPostRequest request)
+    public async Task<IActionResult> Put(Guid id, TaskPostRequest request)
     {
         return NoContent();
     }
