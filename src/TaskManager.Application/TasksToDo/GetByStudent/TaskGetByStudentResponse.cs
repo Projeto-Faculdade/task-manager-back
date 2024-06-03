@@ -1,4 +1,4 @@
-﻿using TaskManager.Application.TasksToDo.GetAll;
+﻿using TaskManager.Application.TasksToDo.GetById;
 
 namespace TaskManager.Application.TasksToDo.GetByStudent;
 

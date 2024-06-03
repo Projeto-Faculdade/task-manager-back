@@ -11,16 +11,16 @@ namespace TaskManager.Application.TasksToDo.Delete
 {
     public class TaskToDoDeleteHandler
     {
-        internal class StudentDeleteHandler(TaskManagerContext context) : IRequestHandler<TaskToDoDeleteRequest>
+        internal class StudentDeleteHandler(TaskManagerContext context) : IRequestHandler<TaskDeleteRequest>
 {
-    public async ValueTask Handle(TaskToDoDeleteRequest request, CancellationToken cancellationToken)
+    public async ValueTask Handle(TaskDeleteRequest request, CancellationToken cancellationToken)
     {
         await context.Students
             .Where(s => s.Id == request.Id)
             .ExecuteDeleteAsync(cancellationToken);
     }
 
-    System.Threading.Tasks.Task IRequestHandler<TaskToDoDeleteRequest>.Handle(TaskToDoDeleteRequest request, CancellationToken cancellationToken)
+    System.Threading.Tasks.Task IRequestHandler<TaskDeleteRequest>.Handle(TaskDeleteRequest request, CancellationToken cancellationToken)
     {
         throw new NotImplementedException();
     }

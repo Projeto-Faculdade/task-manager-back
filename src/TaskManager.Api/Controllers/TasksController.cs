@@ -1,7 +1,9 @@
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using TaskManager.Api.Models;
+using TaskManager.Application;
 using TaskManager.Application.TasksToDo.Create;
+using TaskManager.Application.TasksToDo.Delete;
 using TaskManager.Application.TasksToDo.Update;
 
 namespace TaskManager.Api.Controllers;
@@ -56,22 +58,43 @@ public class TasksController(IMediator mediator) : ControllerBase
     }
 
     [HttpGet("{id:guid}")]
-    public async Task<IActionResult> GetTaskToDo(Guid id, [FromHeader(Name = "Accept-Language")] string preferredLanguage)
+    public async Task<IActionResult> GetTask(Guid id, [FromHeader(Name = "Accept-Language")] string preferredLanguage)
     {
-        return Ok();
+        var request = new TaskGetByIdRequest
+        {
+            Id = id,
+            PreferredLanguage = preferredLanguage
+        };
+        var result = await mediator.Send(request);
+
+        if(result == default)
+        {
+            return NotFound();
+        }
+
+        return Ok(result);
     }
 
     [HttpGet]
-    public async Task<IActionResult> GetTaskToDoAll([FromHeader(Name = "Accept-Language")] string preferredLanguage)
+    public async Task<IActionResult> GetTaskAll([FromHeader(Name = "Accept-Language")] string preferredLanguage)
     {
-        await Task.Delay(100);
-        return Ok();
+        var request = new TaskGetAllRequest
+        {
+            PreferredLanguage = preferredLanguage
+        };
+        var result = await mediator.Send(request);
+        return Ok(result);
     }
 
     [HttpDelete("{id:guid}")]
-    public async Task<IActionResult> DeleteTaskToDo(Guid id)
+    public async Task<IActionResult> DeleteTask(Guid id)
     {
-        await Task.Delay(100);
+        var request = new TaskDeleteRequest
+        {
+            Id = id
+        };
+        await mediator.Send(request);
+        
         return NoContent();
     }
 }
