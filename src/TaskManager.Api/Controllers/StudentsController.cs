@@ -120,7 +120,7 @@ public class StudentsController(IMediator mediator) : ControllerBase
     {
         var request = new StudentDeleteRequest
         {
-            Id = id,
+            Id = id
         };
         await mediator.Send(request);
 
