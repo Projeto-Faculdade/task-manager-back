@@ -38,6 +38,7 @@ public class TasksController(IMediator mediator) : ControllerBase
     [HttpPut("{id:guid}")]
     public async Task<IActionResult> Put(Guid id, TaskPutRequest request)
     {
+        request.Id = id;
         try
         {
             var validation = new TaskPutRequestValidator().Validate(request);
@@ -46,7 +47,6 @@ public class TasksController(IMediator mediator) : ControllerBase
             {
                 return BadRequest(validation.Errors.Select(x => x.ErrorMessage));
             }
-            request.Id = id;
             await mediator.Send((TaskUpdateRequest)request);
 
             return NoContent();
@@ -67,7 +67,7 @@ public class TasksController(IMediator mediator) : ControllerBase
         };
         var result = await mediator.Send(request);
 
-        if(result == default)
+        if (result == default)
         {
             return NotFound();
         }
@@ -94,7 +94,7 @@ public class TasksController(IMediator mediator) : ControllerBase
             Id = id
         };
         await mediator.Send(request);
-        
+
         return NoContent();
     }
 }

@@ -38,6 +38,7 @@ public class StudentsController(IMediator mediator) : ControllerBase
     [HttpPut("{id:guid}")]
     public async Task<IActionResult> Put(Guid id, StudentPutRequest request)
     {
+        request.Id = id;
         try
         {
             var validation = new StudentPutRequestValidator().Validate(request);
@@ -46,7 +47,6 @@ public class StudentsController(IMediator mediator) : ControllerBase
             {
                 return BadRequest(validation.Errors.Select(x => x.ErrorMessage));
             }
-            request.Id = id;
             await mediator.Send((StudentUpdateRequest)request);
             return NoContent();
         }
