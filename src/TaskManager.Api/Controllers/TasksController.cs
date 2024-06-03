@@ -2,6 +2,7 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using TaskManager.Api.Models;
 using TaskManager.Application.TasksToDo.Create;
+using TaskManager.Application.TasksToDo.Update;
 
 namespace TaskManager.Api.Controllers;
 
@@ -32,16 +33,32 @@ public class TasksController(IMediator mediator) : ControllerBase
         }
     }
 
+    [HttpPut("{id:guid}")]
+    public async Task<IActionResult> Put(Guid id, TaskPutRequest request)
+    {
+        try
+        {
+            var validation = new TaskPutRequestValidator().Validate(request);
+            var invalidRequest = !validation.IsValid;
+            if (invalidRequest)
+            {
+                return BadRequest(validation.Errors.Select(x => x.ErrorMessage));
+            }
+            request.Id = id;
+            await mediator.Send((TaskUpdateRequest)request);
+
+            return NoContent();
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.InnerException);
+        }
+    }
+
     [HttpGet("{id:guid}")]
     public async Task<IActionResult> GetTaskToDo(Guid id, [FromHeader(Name = "Accept-Language")] string preferredLanguage)
     {
         return Ok();
-    }
-
-    [HttpPut("{id:guid}")]
-    public async Task<IActionResult> Put(Guid id, TaskPostRequest request)
-    {
-        return NoContent();
     }
 
     [HttpGet]
