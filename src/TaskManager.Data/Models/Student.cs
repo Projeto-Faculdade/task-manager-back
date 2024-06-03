@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace TaskManager.Data.Models;
 
-[Table("strudents")]
+[Table("students")]
 [Index(nameof(Name), IsUnique = true)]
 [Index(nameof(Email), IsUnique = true)]
 public class Student
@@ -27,6 +27,4 @@ public class Student
     [MaxLength(5)]
     [Column("preferred_language")]
     public string PreferredLanguage { get; set; } = string.Empty!;
-
-
 }
