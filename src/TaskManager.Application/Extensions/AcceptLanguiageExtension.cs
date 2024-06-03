@@ -14,10 +14,4 @@ public static class AcceptLanguiageExtension
             _ => PORTUGUESE
         };
     }
-
-    public static int Felipe(this string numero)
-    {
-        return int.Parse(numero);
-
-    }
 }

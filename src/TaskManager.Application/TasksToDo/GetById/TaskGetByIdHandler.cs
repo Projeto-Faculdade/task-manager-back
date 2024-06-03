@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
+using TaskManager.Application.Extensions;
 using TaskManager.Application.TasksToDo.GetById;
 using TaskManager.Data;
 
@@ -19,7 +20,7 @@ internal class TaskGetByIdHandler(TaskManagerContext context) : IRequestHandler<
         {
             LimitDate = task.LimitDate,
             Course = task.Course,
-            Name = request.PreferredLanguage == "pt" ? task.Name_Pt : task.Name_En,
+            Name = request.PreferredLanguage.ToPreferredLanguage() == "pt" ? task.Name_Pt : task.Name_En,
         };
 
         return result;

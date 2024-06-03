@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
+using TaskManager.Application.Extensions;
 using TaskManager.Application.TasksToDo.GetById;
 using TaskManager.Data;
 
@@ -13,10 +14,11 @@ public class TaskGetByStudentHandler(TaskManagerContext context) : IRequestHandl
             .Where(t => t.StudentId == request.SudentId)
             .Select(t => new TaskGetByIdResponse
             {
+                Id = t.Id,
                 Course = t.Course,
                 LimitDate = t.LimitDate,
-                Name = request.PreferredLanguage == "pt" ? t.Name_Pt : t.Name_En,
-                StudentId = t.StudentId,
+                Name = request.PreferredLanguage.ToPreferredLanguage() == "pt" ? t.Name_Pt : t.Name_En,
+                StudentId = t.StudentId
             })
             .ToListAsync(cancellationToken);
 
