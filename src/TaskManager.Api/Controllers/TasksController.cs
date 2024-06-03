@@ -58,7 +58,7 @@ public class TasksController(IMediator mediator) : ControllerBase
     }
 
     [HttpGet("{id:guid}")]
-    public async Task<IActionResult> GetTaskToDo(Guid id, [FromHeader(Name = "Accept-Language")] string preferredLanguage)
+    public async Task<IActionResult> GetTask(Guid id, [FromHeader(Name = "Accept-Language")] string preferredLanguage)
     {
         var request = new TaskGetByIdRequest
         {
@@ -76,7 +76,7 @@ public class TasksController(IMediator mediator) : ControllerBase
     }
 
     [HttpGet]
-    public async Task<IActionResult> GetTaskToDoAll([FromHeader(Name = "Accept-Language")] string preferredLanguage)
+    public async Task<IActionResult> GetTaskAll([FromHeader(Name = "Accept-Language")] string preferredLanguage)
     {
         var request = new TaskGetAllRequest
         {
@@ -87,9 +87,9 @@ public class TasksController(IMediator mediator) : ControllerBase
     }
 
     [HttpDelete("{id:guid}")]
-    public async Task<IActionResult> DeleteTaskToDo(Guid id)
+    public async Task<IActionResult> DeleteTask(Guid id)
     {
-        var request = new TaskToDoDeleteRequest
+        var request = new TaskDeleteRequest
         {
             Id = id
         };

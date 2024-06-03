@@ -1,6 +1,6 @@
 ﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
-using TaskManager.Application.TasksToDo.GetAll;
+using TaskManager.Application.TasksToDo.GetById;
 using TaskManager.Data;
 
 namespace TaskManager.Application.TasksToDo.GetByStudent;
